@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Football Pick'em Championship</title>
+    <meta name="description" content="Make your college football picks with confidence scoring. Win bragging rights!">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+            color: #000000;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #c9920e 0%, #d4a424 50%, #c9920e 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(201, 146, 14, 0.3);
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #c9920e, #ffffff, #c9920e);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', 'Impact', sans-serif;
+            font-size: 32px;
+            font-weight: 400;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Championship Banner */
+        .championship-banner {
+            background: linear-gradient(45deg, #000000 0%, #1a1a1a 100%);
+            color: #c9920e;
+            text-align: center;
+            padding: 16px 0;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #c9920e;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+            background: #ffffff;
+        }
+        
+        .page-title {
+            text-align: center;
+            font-family: 'Bebas Neue', 'Impact', sans-serif;
+            font-size: 64px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0px #c9920e;
+        }
+        
+        .page-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: #666666;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+        
+        .deadline-notice {
+            background: linear-gradient(135deg, #c9920e 0%, #d4a424 100%);
+            color: #000000;
+            padding: 24px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 16px rgba(201, 146, 14, 0.3);
+            border: 3px solid #ffffff;
+        }
+        
+        .deadline-notice h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        
+        .deadline-notice p {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        /* User Entry */
+        .user-entry {
+            background: #ffffff;
+            border: 3px solid #c9920e;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(201, 146, 14, 0.2);
+        }
+        
+        .user-entry h3 {
+            color: #000000;
+            font-size: 28px;
+            margin-bottom: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .user-entry input {
+            width: 100%;
+            max-width: 400px;
+            padding: 18px;
+            border: 2px solid #c9920e;
+            border-radius: 6px;
+            font-size: 18px;
+            background: #ffffff;
+            color: #000000;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .user-entry input:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: 0 0 0 3px rgba(201, 146, 14, 0.3);
+        }
+        
+        .user-entry button {
+            background: linear-gradient(135deg, #000000 0%, #333333 100%);
+            color: #c9920e;
+            padding: 18px 36px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .user-entry button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        
+        /* Games Section */
+        .games-section {
+            display: none;
+        }
+        
+        .games-section.active {
+            display: block;
+        }
+        
+        .welcome-message {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            color: #c9920e;
+            padding: 28px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+            text-align: center;
+            border: 2px solid #c9920e;
+        }
+        
+        .welcome-message h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .welcome-message p {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .confidence-explainer {
+            background: #f8f9fa;
+            border: 2px solid #c9920e;
+            border-left: 8px solid #c9920e;
+            padding: 28px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+        
+        .confidence-explainer h4 {
+            color: #000000;
+            font-size: 20px;
+            margin-bottom: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .confidence-explainer p {
+            color: #333333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .game-card {
+            background: #ffffff;
+            border: 3px solid #c9920e;
+            padding: 28px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(201, 146, 14, 0.2);
+        }
+        
+        .game-card:hover {
+            border-color: #000000;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(201, 146, 14, 0.3);
+        }
+        
+        .game-time {
+            color: #666666;
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .game-matchup {
+            color: #000000;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        
+        .team-selection {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .team-option {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: #f8f9fa;
+            border: 2px solid #c9920e;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .team-option:hover {
+            border-color: #000000;
+            background: #ffffff;
+        }
+        
+        .team-option.selected {
+            border-color: #000000;
+            background: #c9920e;
+            color: #000000;
+            font-weight: 700;
+        }
+        
+        .team-option input[type="radio"] {
+            margin-right: 12px;
+            accent-color: #000000;
+        }
+        
+        .team-option label {
+            color: inherit;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 600;
+        }
+        
+        .confidence-input {
+            text-align: center;
+        }
+        
+        .confidence-input label {
+            display: block;
+            color: #666666;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .confidence-input input {
+            width: 80px;
+            padding: 12px;
+            border: 2px solid #c9920e;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #000000;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .confidence-input input:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: 0 0 0 3px rgba(201, 146, 14, 0.3);
+        }
+        
+        .submit-picks {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .submit-picks button {
+            background: linear-gradient(135deg, #c9920e 0%, #d4a424 100%);
+            color: #000000;
+            padding: 20px 48px;
+            border: 3px solid #000000;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 16px rgba(201, 146, 14, 0.3);
+        }
+        
+        .submit-picks button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(201, 146, 14, 0.4);
+        }
+        
+        /* Leaderboard */
+        .leaderboard-section {
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            border: 3px solid #c9920e;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        
+        .leaderboard-section h3 {
+            color: #c9920e;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 32px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .leaderboard-table th {
+            background: linear-gradient(135deg, #c9920e 0%, #d4a424 100%);
+            color: #000000;
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .leaderboard-table td {
+            color: #000000;
+            padding: 16px;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: 600;
+        }
+        
+        .leaderboard-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .leaderboard-table tr:first-child td:first-child {
+            background: linear-gradient(135deg, #c9920e 0%, #d4a424 100%);
+            color: #000000;
+            font-weight: 900;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .picks-display {
+            margin-top: 48px;
+            padding: 40px;
+            background: #ffffff;
+            border: 3px solid #c9920e;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(201, 146, 14, 0.2);
+        }
+        
+        .picks-display h3 {
+            color: #000000;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 32px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .picks-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 3px solid #c9920e;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 6px;
+        }
+        
+        .pick-column-header {
+            color: #000000;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .pick-column-header:first-child {
+            text-align: left;
+        }
+        
+        .user-picks {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: #f8f9fa;
+            border: 2px solid #c9920e;
+            border-radius: 8px;
+            border-left: 8px solid #c9920e;
+        }
+        
+        .user-picks h4 {
+            color: #000000;
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .pick-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #c9920e;
+        }
+        
+        .pick-item:last-child {
+            border-bottom: none;
+        }
+        
+        .pick-game {
+            color: #000000;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .pick-team {
+            color: #000000;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        
+        .pick-confidence {
+            color: #c9920e;
+            font-weight: 900;
+            text-align: center;
+            font-size: 20px;
+        }
+        
+        /* Locked state */
+        .locked-notice {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: #ffffff;
+            padding: 24px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 32px;
+            border: 3px solid #000000;
+            box-shadow: 0 4px 16px rgba(220, 53, 69, 0.3);
+        }
+        
+        .locked-notice h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 36px;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+            
+            .leaderboard-table th,
+            .leaderboard-table td {
+                padding: 12px 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Championship Banner -->
+    <div class="championship-banner">
+        🏆 College Football Pick'em Championship • Season 2025 🏆
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                Boostly CFP Pick'em Challenge
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">Make Your Picks</h1>
+            <p class="page-subtitle">Prove your college football expertise. Win eternal bragging rights. Get a reasonably-priced lunch.</p>
+            
+            <!-- Deadline Notice -->
+            <div class="deadline-notice">
+                <h3>Final Call: Friday, August 29th at 5:00 PM MDT</h3>
+                <p>Lock in your championship picks before the deadline strikes!</p>
+            </div>
+
+            <!-- User Entry Section -->
+            <div class="user-entry" id="userEntry">
+                <h3>Enter the Championship</h3>
+                <input type="text" id="userName" placeholder="Your Champion Name..." maxlength="30">
+                <button onclick="enterUser()">Join the Battle</button>
+            </div>
+
+            <!-- Games Section -->
+            <div class="games-section" id="gamesSection">
+                <div class="welcome-message">
+                    <h3>Welcome to the Arena, <span id="welcomeName"></span>!</h3>
+                    <p>Select your champions and stake your confidence on each battle.</p>
+                </div>
+
+                <div class="confidence-explainer">
+                    <h4>Championship Scoring Rules:</h4>
+                    <p><strong>Victory:</strong> Earn your confidence points (1-10)</p>
+                    <p><strong>Defeat:</strong> Lose your confidence points</p>
+                    <p><strong>Championship Strategy:</strong> High confidence on sure wins, low on risky upsets!</p>
+                </div>
+
+                <div class="games-grid" id="gamesGrid">
+                    <!-- Games will be populated by JavaScript -->
+                </div>
+
+                <div class="submit-picks">
+                    <button onclick="submitPicks()" id="submitButton">Submit Your Picks</button>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="leaderboard-section" id="leaderboardSection">
+                <h3>🏆 Boostly Leaderboard 🏆 </h3>
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Champion</th>
+                            <th>Score</th>
+                            <th>Victories</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: #666666;">Awaiting Championship Challengers...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- All Picks Display -->
+            <div class="picks-display" id="picksDisplay">
+                <h3>Championship Predictions</h3>
+                <div class="picks-header">
+                    <div class="pick-column-header">Battle</div>
+                    <div class="pick-column-header">Champion</div>
+                    <div class="pick-column-header">Confidence</div>
+                </div>
+                <div id="allPicksContainer">
+                    <p style="text-align: center; color: #666666;">No champions have entered the arena yet...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Game data
+        const games = [
+            {
+                id: 1,
+                team1: "Georgia Tech",
+                team2: "Colorado",
+                time: "Friday 6:00 PM MDT",
+                winner: null,
+                completed: false
+            },
+            {
+                id: 2,
+                team1: "#1 Texas",
+                team2: "#3 Ohio State",
+                time: "Saturday 10:00 AM MDT",
+                winner: null,
+                completed: false
+            },
+            {
+                id: 3,
+                team1: "#8 Alabama",
+                team2: "Florida State",
+                time: "Saturday 1:30 PM MDT",
+                winner: null,
+                completed: false
+            },
+            {
+                id: 4,
+                team1: "Weber State",
+                team2: "James Madison",
+                time: "Saturday 4:00 PM MDT",
+                winner: null,
+                completed: false
+            },
+            {
+                id: 5,
+                team1: "#9 LSU",
+                team2: "#4 Clemson",
+                time: "Saturday 5:30 PM MDT",
+                winner: null,
+                completed: false
+            },
+            {
+                id: 6,
+                team1: "Utah State",
+                team2: "UTEP",
+                time: "Saturday 5:30 PM MDT",
+                winner: null,
+                completed: false
+            },
+            {
+                id: 7,
+                team1: "BYU",
+                team2: "Portland State",
+                time: "Saturday 6:00 PM MDT",
+                winner: null,
+                completed: false
+            },
+            {
+                id: 8,
+                team1: "Utah",
+                team2: "UCLA",
+                time: "Saturday 9:00 PM MDT",
+                winner: null,
+                completed: false
+            },
+            {
+                id: 9,
+                team1: "#6 Notre Dame",
+                team2: "#10 Miami",
+                time: "Sunday 1:00 PM MDT",
+                winner: null,
+                completed: false
+            }
+        ];
+
+        let currentUser = null;
+        const DEADLINE = new Date('2025-08-30T00:00:00Z'); // Friday 5 PM MDT in UTC
+
+        // Check if picks are locked
+        function arePicksLocked() {
+            return new Date() > DEADLINE;
+        }
+
+        // Initialize the page
+        function init() {
+            checkExistingUser();
+            generateGamesHTML();
+            updateLeaderboard();
+            updatePicksDisplay();
+            
+            if (arePicksLocked()) {
+                showLockedState();
+            }
+        }
+
+        // Check for existing user
+        function checkExistingUser() {
+            const savedUser = localStorage.getItem('cfbPickemUser');
+            if (savedUser) {
+                currentUser = savedUser;
+                document.getElementById('userEntry').style.display = 'none';
+                document.getElementById('gamesSection').classList.add('active');
+                document.getElementById('welcomeName').textContent = currentUser;
+                loadUserPicks();
+            }
+        }
+
+        // Enter user
+        function enterUser() {
+            const nameInput = document.getElementById('userName');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert('Please enter your champion name!');
+                return;
+            }
+            
+            if (arePicksLocked()) {
+                alert('The championship deadline has passed! Picks are locked.');
+                return;
+            }
+            
+            currentUser = name;
+            localStorage.setItem('cfbPickemUser', currentUser);
+            
+            document.getElementById('userEntry').style.display = 'none';
+            document.getElementById('gamesSection').classList.add('active');
+            document.getElementById('welcomeName').textContent = currentUser;
+            
+            loadUserPicks();
+        }
+
+        // Generate games HTML
+        function generateGamesHTML() {
+            const gamesGrid = document.getElementById('gamesGrid');
+            
+            games.forEach(game => {
+                const gameCard = document.createElement('div');
+                gameCard.className = 'game-card';
+                gameCard.innerHTML = `
+                    <div class="game-time">${game.time}</div>
+                    <div class="game-matchup">${game.team1} vs ${game.team2}</div>
+                    <div class="team-selection">
+                        <div class="team-option" onclick="selectTeam(${game.id}, '${game.team1}')">
+                            <input type="radio" name="game${game.id}" value="${game.team1}" id="game${game.id}_team1">
+                            <label for="game${game.id}_team1">${game.team1}</label>
+                        </div>
+                        <div class="team-option" onclick="selectTeam(${game.id}, '${game.team2}')">
+                            <input type="radio" name="game${game.id}" value="${game.team2}" id="game${game.id}_team2">
+                            <label for="game${game.id}_team2">${game.team2}</label>
+                        </div>
+                    </div>
+                    <div class="confidence-input">
+                        <label for="confidence${game.id}">Confidence (1-10):</label>
+                        <input type="number" id="confidence${game.id}" min="1" max="10" value="5">
+                    </div>
+                `;
+                gamesGrid.appendChild(gameCard);
+            });
+        }
+
+        // Select team
+        function selectTeam(gameId, team) {
+            const radio = document.querySelector(`input[name="game${gameId}"][value="${team}"]`);
+            radio.checked = true;
+            
+            // Update visual selection
+            const gameCard = radio.closest('.game-card');
+            const options = gameCard.querySelectorAll('.team-option');
+            options.forEach(option => option.classList.remove('selected'));
+            radio.closest('.team-option').classList.add('selected');
+        }
+
+        // Load user picks
+        function loadUserPicks() {
+            const userPicks = getUserPicks(currentUser);
+            if (!userPicks) return;
+            
+            games.forEach(game => {
+                const pick = userPicks.picks.find(p => p.gameId === game.id);
+                if (pick) {
+                    const radio = document.querySelector(`input[name="game${game.id}"][value="${pick.team}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        radio.closest('.team-option').classList.add('selected');
+                    }
+                    
+                    const confidenceInput = document.getElementById(`confidence${game.id}`);
+                    if (confidenceInput) {
+                        confidenceInput.value = pick.confidence;
+                    }
+                }
+            });
+        }
+
+        // Submit picks
+        function submitPicks() {
+            if (arePicksLocked()) {
+                alert('The championship deadline has passed! Picks are locked.');
+                return;
+            }
+            
+            const picks = [];
+            let allPicksMade = true;
+            
+            games.forEach(game => {
+                const selectedTeam = document.querySelector(`input[name="game${game.id}"]:checked`);
+                const confidence = document.getElementById(`confidence${game.id}`).value;
+                
+                if (!selectedTeam || !confidence || confidence < 1 || confidence > 10) {
+                    allPicksMade = false;
+                    return;
+                }
+                
+                picks.push({
+                    gameId: game.id,
+                    team: selectedTeam.value,
+                    confidence: parseInt(confidence),
+                    game: `${game.team1} vs ${game.team2}`
+                });
+            });
+            
+            if (!allPicksMade) {
+                alert('Complete all championship battles with confidence 1-10!');
+                return;
+            }
+            
+            // Save picks
+            const userPicks = {
+                userName: currentUser,
+                picks: picks,
+                timestamp: new Date().toISOString(),
+                score: 0
+            };
+            
+            saveUserPicks(userPicks);
+            updateLeaderboard();
+            updatePicksDisplay();
+            
+            alert('Championship picks locked in! May the odds be with you! 🏆');
+        }
+
+        // Save user picks
+        function saveUserPicks(userPicks) {
+            let allPicks = JSON.parse(localStorage.getItem('cfbPickemAllPicks') || '[]');
+            
+            // Remove existing picks for this user
+            allPicks = allPicks.filter(picks => picks.userName !== userPicks.userName);
+            
+            // Add new picks
+            allPicks.push(userPicks);
+            
+            localStorage.setItem('cfbPickemAllPicks', JSON.stringify(allPicks));
+        }
+
+        // Get user picks
+        function getUserPicks(userName) {
+            const allPicks = JSON.parse(localStorage.getItem('cfbPickemAllPicks') || '[]');
+            return allPicks.find(picks => picks.userName === userName);
+        }
+
+        // Get all picks
+        function getAllPicks() {
+            return JSON.parse(localStorage.getItem('cfbPickemAllPicks') || '[]');
+        }
+
+        // Calculate scores
+        function calculateScores() {
+            const allPicks = getAllPicks();
+            
+            allPicks.forEach(userPicks => {
+                let score = 0;
+                let correct = 0;
+                
+                userPicks.picks.forEach(pick => {
+                    const game = games.find(g => g.id === pick.gameId);
+                    if (game && game.completed) {
+                        if (pick.team === game.winner) {
+                            score += pick.confidence;
+                            correct++;
+                        } else {
+                            score -= pick.confidence;
+                        }
+                    }
+                });
+                
+                userPicks.score = score;
+                userPicks.correct = correct;
+            });
+            
+            localStorage.setItem('cfbPickemAllPicks', JSON.stringify(allPicks));
+            return allPicks;
+        }
+
+        // Update leaderboard
+        function updateLeaderboard() {
+            const allPicks = calculateScores();
+            const leaderboardBody = document.getElementById('leaderboardBody');
+            
+            if (allPicks.length === 0) {
+                leaderboardBody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #666666;">Awaiting Championship Challengers...</td></tr>';
+                return;
+            }
+            
+            // Sort by score descending
+            allPicks.sort((a, b) => b.score - a.score);
+            
+            leaderboardBody.innerHTML = '';
+            allPicks.forEach((userPicks, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="font-weight: 900; color: #c9920e; text-align: center;">${index === 0 ? '👑' : '#' + (index + 1)}</td>
+                    <td style="font-weight: 700;">${userPicks.userName}</td>
+                    <td style="color: ${userPicks.score >= 0 ? '#28a745' : '#dc3545'}; font-weight: 900;">${userPicks.score}</td>
+                    <td style="font-weight: 600;">${userPicks.correct || 0}/${games.filter(g => g.completed).length}</td>
+                `;
+                leaderboardBody.appendChild(row);
+            });
+        }
+
+        // Update picks display
+        function updatePicksDisplay() {
+            const allPicks = getAllPicks();
+            const container = document.getElementById('allPicksContainer');
+            
+            if (allPicks.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666666;">No champions have entered the arena yet...</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            allPicks.forEach(userPicks => {
+                const userDiv = document.createElement('div');
+                userDiv.className = 'user-picks';
+                
+                let picksHTML = `<h4>${userPicks.userName} (Score: ${userPicks.score || 0})</h4>`;
+                
+                userPicks.picks.forEach(pick => {
+                    const game = games.find(g => g.id === pick.gameId);
+                    const isCorrect = game && game.completed && pick.team === game.winner;
+                    const isWrong = game && game.completed && pick.team !== game.winner;
+                    
+                    picksHTML += `
+                        <div class="pick-item">
+                            <span class="pick-game">${pick.game}</span>
+                            <span class="pick-team" style="color: ${isCorrect ? '#28a745' : isWrong ? '#dc3545' : '#000000'}">${pick.team}</span>
+                            <span class="pick-confidence">${pick.confidence}</span>
+                        </div>
+                    `;
+                });
+                
+                userDiv.innerHTML = picksHTML;
+                container.appendChild(userDiv);
+            });
+        }
+
+        // Show locked state
+        function showLockedState() {
+            const gamesSection = document.getElementById('gamesSection');
+            const submitButton = document.getElementById('submitButton');
+            
+            if (gamesSection.classList.contains('active')) {
+                const lockedNotice = document.createElement('div');
+                lockedNotice.className = 'locked-notice';
+                lockedNotice.innerHTML = `
+                    <h3>⚔️ Championship Arena Closed!</h3>
+                    <p>The deadline has passed. Let the battles begin!</p>
+                `;
+                
+                gamesSection.insertBefore(lockedNotice, gamesSection.firstChild);
+                submitButton.style.display = 'none';
+                
+                // Disable all inputs
+                document.querySelectorAll('input[type="radio"], input[type="number"]').forEach(input => {
+                    input.disabled = true;
+                });
+            }
+        }
+
+        // Function to update game results (call this manually or via automation)
+        function updateGameResult(gameId, winner) {
+            const game = games.find(g => g.id === gameId);
+            if (game) {
+                game.winner = winner;
+                game.completed = true;
+                updateLeaderboard();
+                updatePicksDisplay();
+            }
+        }
+
+        // Function to check scores via web search (placeholder for automation)
+        async function checkScoresViaWebSearch() {
+            console.log('Checking championship scores via web search...');
+            // This would integrate with WebSearch functionality
+            // For now, this is a placeholder for manual score updates
+            
+            // Example usage:
+            // updateGameResult(1, "Colorado"); // Georgia Tech vs Colorado - Colorado wins
+            // updateGameResult(2, "#1 Texas"); // Texas vs Ohio State - Texas wins
+            // ... etc
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Auto-refresh every 30 minutes to check for updates
+        setInterval(() => {
+            updateLeaderboard();
+            updatePicksDisplay();
+        }, 30 * 60 * 1000);
+    </script>
+</body>
+</html>
